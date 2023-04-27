@@ -17,16 +17,6 @@ namespace P209
 
 		const int ZERO = 0;
 
-		void OnEnable()
-		{
-			InputManager.angularVelocityAction += OnAngularVelocityInput;
-		}
-
-		void OnDisable()
-		{
-			InputManager.angularVelocityAction -= OnAngularVelocityInput;
-		}
-
 		void Awake()
 		{
 			rigidBody = GetComponent<Rigidbody>();
@@ -55,8 +45,6 @@ namespace P209
 			else if (desiredVelocity == Vector3.zero && currentVelocity != Vector3.zero)
 				rigidBody.velocity = Vector3.Lerp(currentVelocity, Vector3.zero, 1 * Time.fixedDeltaTime);
 		}
-
-		void OnAngularVelocityInput(Vector3 velocity) => angularVelocity = velocity;
 
 		Vector3 ConvertAccelerationAxes()
 		{
