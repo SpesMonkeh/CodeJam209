@@ -42,7 +42,7 @@ namespace P209
 		public Accelerometer Accelerometer => Accelerometer.current;
 		public Vector3 Acceleration => Accelerometer.acceleration.value;
 		
-		public void OnPrimaryTouch(InputAction.CallbackContext context) => primaryTouchAction?.Invoke(context.ReadValue<Vector2>());
+		public void OnPrimaryTouch(InputAction.CallbackContext context) { }
 		
 		public void OnGyroscope(InputAction.CallbackContext context)
 		{
@@ -78,13 +78,7 @@ namespace P209
 
 		static void EnableSensor<TSensor>(TSensor sensor) where TSensor : Sensor
 		{
-			if (sensor is not null)
-			{
-				InputSystem.EnableDevice(sensor);
-				Debug.Log($"P2 :::: {nameof(TSensor)} is active.");
-			}
-			else
-				Debug.LogError($"P2 :::: No {nameof(TSensor)} active!");
+			if (sensor is not null) InputSystem.EnableDevice(sensor);
 		}
 
 		static void DisableSensor<TSensor>(TSensor sensor) where TSensor : Sensor

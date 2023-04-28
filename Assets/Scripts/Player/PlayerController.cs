@@ -25,7 +25,6 @@ namespace P209
 		void Start()
 		{
 			accelerometer = InputManager.Instance.Accelerometer;
-			Debug.Log($"P2 :::: Accelerometer => {accelerometer}");
 		}
 
 		void Update()

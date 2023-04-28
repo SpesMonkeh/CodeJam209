@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace P209
@@ -70,17 +71,23 @@ namespace P209
 
 		IEnumerator MoveToStartPosition()
 		{
-			while (transform.position != startPosition)
+			Vector3 pos = transform.position;
+			resettingArm = Math.Abs(pos.y - startPosition.y) > 0.1f;
+
+			while (resettingArm)
 			{
-				Vector3 pos = transform.position;
-				pos = Vector3.Lerp(pos, startPosition, armMoveSpeed * armResetSpeedMultiplier * Time.deltaTime);
+				pos.y = Mathf.Lerp(pos.y, startPosition.y, armMoveSpeed * armResetSpeedMultiplier * Time.deltaTime);
 				transform.position = pos;
 				yield return waitForEndOfFrame;
-				resettingArm = pos != startPosition;
+
+				if (Math.Abs(pos.y - startPosition.y) <= 0.1f)
+					resettingArm = false;
 			}
 			
 			needleHitArm = false;
 			needleHitVein = false;
+			
+			yield return waitForEndOfFrame;
 		}
 	}
 }
