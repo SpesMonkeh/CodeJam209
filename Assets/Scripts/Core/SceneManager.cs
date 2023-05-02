@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
 
 namespace P209
@@ -6,15 +7,20 @@ namespace P209
 	[DisallowMultipleComponent]
 	public class SceneManager : MonoBehaviour
 	{
-		const int MAIN_MENU_SCENE_INDEX = 0;
-		
-		public static void GoToMainMenuScene() => GoToScene(MAIN_MENU_SCENE_INDEX);
+		const int INVALID_SCENE_INDEX = -1;
 
-		public static void GoToScene(int index)
+		static int ActiveSceneBuildIndex
 		{
-			int activeSceneIndex = UnitySceneManager.GetActiveScene().buildIndex;
-			
-			if (activeSceneIndex == index || UnitySceneManager.GetSceneByBuildIndex(index).IsValid() is false) return;
+			get
+			{
+				Scene activeScene = UnitySceneManager.GetActiveScene();
+				return activeScene.IsValid() ? activeScene.buildIndex : INVALID_SCENE_INDEX;
+			}
+		}
+
+		public void GoToScene(int index)
+		{
+			if (ActiveSceneBuildIndex == index || UnitySceneManager.GetSceneByBuildIndex(index).IsValid() is false) return;
 			UnitySceneManager.LoadScene(index);
 		}
 	}

@@ -14,30 +14,9 @@ namespace P209
 		Gyroscope gyroscope;
 
 		static PlayerControls playerControls;
-		static InputManager instance;
 
 		const int ZERO = 0;
 		const float POINT_O_ONE = 0.01f;
-
-		public static InputManager Instance
-		{
-			get
-			{
-				if (instance != null) return instance;
-
-				InputManager[] inputManagers = FindObjectsOfType<InputManager>();
-				if (inputManagers.Length <= ZERO) return instance; // TODO Håndtér tilfælde, hvor inputManagers.Length == ZERO
-
-				instance = inputManagers[ZERO];
-				for (int i = 1; i < inputManagers.Length; i++)
-				{
-					if (instance == inputManagers[i]) continue;
-					Debug.LogWarning($"P2 :::: Destroying unnecessary InputManager => {inputManagers[i]}");
-					Destroy(inputManagers[i]);
-				}
-				return instance;
-			}
-		}
 
 		public Accelerometer Accelerometer => Accelerometer.current;
 		public Vector3 Acceleration => Accelerometer.acceleration.value;
@@ -78,10 +57,11 @@ namespace P209
 
 		static void EnableSensor<TSensor>(TSensor sensor) where TSensor : Sensor
 		{
-			if (sensor is not null) InputSystem.EnableDevice(sensor);
+			if (sensor is not null) 
+				InputSystem.EnableDevice(sensor);
 		}
 
-		static void DisableSensor<TSensor>(TSensor sensor) where TSensor : Sensor
+		public static void DisableSensor<TSensor>(TSensor sensor) where TSensor : Sensor
 		{
 			if (sensor is null || sensor.enabled is false) return;
 			Debug.Log($"P2 :::: Disabling sensor {sensor.name}");

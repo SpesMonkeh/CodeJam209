@@ -14,12 +14,12 @@ namespace P209
 
 		void Start()
 		{
-			accelerometer = InputManager.Instance.Accelerometer;
+			accelerometer = GameManager.Instance.InputManager.Accelerometer;
 		}
 		
 		void Update()
 		{
-			acceleration = accelerometer.acceleration.value;
+			acceleration = accelerometer.acceleration.ReadValue();
 			
 			Quaternion tfRotation = transform.rotation;
 			Vector3 eulerRotation = tfRotation.eulerAngles;

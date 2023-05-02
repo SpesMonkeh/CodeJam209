@@ -24,7 +24,7 @@ namespace P209
 
 		void Start()
 		{
-			accelerometer = InputManager.Instance.Accelerometer;
+			accelerometer = GameManager.Instance.InputManager.Accelerometer;
 		}
 
 		void Update()

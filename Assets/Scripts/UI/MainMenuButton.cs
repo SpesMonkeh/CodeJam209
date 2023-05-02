@@ -7,13 +7,18 @@ namespace P209
 	public sealed class MainMenuButton : MonoBehaviour
 	{
 		Button mainMenuButton;
+		SceneManager sceneManager;
+
+		const int MAIN_MENU_SCENE_INDEX = 0;
 
 		void Awake()
 		{
 			mainMenuButton = GetComponent<Button>();
-			mainMenuButton.onClick.AddListener(SceneManager.GoToMainMenuScene);
+			mainMenuButton.onClick?.AddListener(GoToMainMenuScene);
 		}
 
-		void OnDisable() => mainMenuButton.onClick.RemoveListener(SceneManager.GoToMainMenuScene);
+		void OnDisable() => mainMenuButton.onClick?.RemoveListener(GoToMainMenuScene);
+
+		static void GoToMainMenuScene() => GameManager.Instance.SceneManager.GoToScene(MAIN_MENU_SCENE_INDEX);
 	}
 }

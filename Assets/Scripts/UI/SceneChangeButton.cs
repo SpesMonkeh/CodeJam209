@@ -8,25 +8,13 @@ namespace P209
 	public sealed class SceneChangeButton : MonoBehaviour
 	{
 		[SerializeField, Min(0f)] int goToSceneIndex = -1;
-		[SerializeField][TextArea(1, 1)] string goToSceneName = "";
 		
 		Button sceneChangeButton;
+		SceneManager sceneManager;
 
-#if UNITY_EDITOR
-		void OnValidate()
-		{
-			// ReSharper disable once ConditionIsAlwaysTrueOrFalse
-			if (goToSceneIndex < 0)
-				goToSceneName = "SCENE INDEX CANNOT BE LESS THAN 0";
-			else if (UnitySceneManager.GetSceneByBuildIndex(goToSceneIndex).IsValid())
-				goToSceneName = UnitySceneManager.GetSceneByBuildIndex(goToSceneIndex).name;
-			else
-				goToSceneName = "Invalid Scene Index";
-		}
-#endif
-		
 		void Awake()
 		{
+			sceneManager = GameManager.Instance.SceneManager;
 			sceneChangeButton = GetComponent<Button>();
 			sceneChangeButton.onClick.AddListener(RequestSceneChange);
 		}
@@ -34,7 +22,7 @@ namespace P209
 		void RequestSceneChange()
 		{
 			if (UnitySceneManager.GetSceneByBuildIndex(goToSceneIndex).IsValid() is false) return;
-			SceneManager.GoToScene(goToSceneIndex);
+			sceneManager.GoToScene(goToSceneIndex);
 		}
 	}
 }
