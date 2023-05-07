@@ -179,7 +179,6 @@ package P209 {
         - SetAccelerometer() : Void
         - ControlRotation() : Void
         - SetPivotRotationToZero() : Void
-        - CalibrateAngles() : Void
         - GetPivotPointGameObject() : GameObject
     }
 }
@@ -225,7 +224,6 @@ package P209 {
         - Awake()
     }
 }
-
 
 newpage
 

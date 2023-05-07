@@ -6,13 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="71cf4428-5133-410a-b40a-9a33bc552c6a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CodeJam209/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CodeJam209/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Levels/InsertionPoint/ArmController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Levels/InsertionPoint/ArmController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Levels/InsertionPoint/PlayerControllerArm.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Levels/InsertionPoint/PlayerControllerArm.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/QuitGameButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/QuitGameButton.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/UML/ClassUML.puml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UML/ClassUML.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cj209.zip" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +60,7 @@
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "Christians",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/ChrHo/Desktop/PMA Exam docs/Class UML diagram.png",
+    "last_opened_file_path": "C:/Users/ChrHo/Desktop/PMA Exam docs",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -148,7 +143,7 @@
       <workItem from="1683384602887" duration="1333000" />
       <workItem from="1683387974716" duration="8540000" />
       <workItem from="1683466749763" duration="11435000" />
-      <workItem from="1683482485945" duration="12637000" />
+      <workItem from="1683482485945" duration="13634000" />
     </task>
     <servers />
   </component>
