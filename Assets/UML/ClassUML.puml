@@ -4,22 +4,17 @@
 skinparam classAttributeIconSize 0
 
 package UnityEngine {
-    package InputSystem {
-        package LowLevel {
-            class Accelerometer        
-        }
-    }
     class MonoBehaviour
 }
 
 package P209 {
 
-    interface IGeneralActions {
-        OnPrimaryTouch(InputAction.CallbackContext context) : Void {abstract}
+    interface IGeneralActions <<Interface>> {
+        OnPrimaryTouch(InputAction.CallbackContext) : Void {abstract}
         OnAngularVelocity(InputAction.CallbackContext) : Void {abstract}
     }
     
-    struct GeneralActions {
+    struct GeneralActions <<Struct>> {
         - m_Wrapper : PlayerControls
        
         + <<Constructor>> GeneralActions(PlayerControls)
@@ -90,6 +85,7 @@ package P209 {
     class GameManager <<Singleton>> extends UnityEngine.MonoBehaviour  {
         - inputManager : InputManager
         - instance : GameManager {static}
+        - GAME_MANAGER_PREFAB_PATH : String
         
         + <<Property>> InputManager InputManager
         + <<Property>> GameManager Instance {static}
@@ -102,7 +98,7 @@ package P209 {
         + angularVelocityAction : Action<Vector3> {static}
         - playerControls : PlayerControls {static}
         
-        + <<Property>> Accelerometer : UnityEngine.InputSystem.LowLevel.Accelerometer
+        + <<Property>> Accelerometer : Accelerometer
         + <<Property>> Acceleration : Vector3
         
         + OnPrimaryTouch(InputAction.CallbackContext) : Void
@@ -145,18 +141,17 @@ package P209 {
     
     class PlayerController extends UnityEngine.MonoBehaviour {
         - moveSpeed : Float
-        - angularVelocity : Vector3
-        - acceleration : Vector3
         - desiredVelocity : Vector3
         - rigidBody : Rigidbody
-        - accelerometer : UnityEngine.InputSystem.LowLevel.Accelerometer
+        - accelerometer : Accelerometer
         - ZERO : Int
+        
+        -<<Property>> Acceleration : Vector3
         
         - Awake() : Void
         - Start() : Void
         - Update() : Void
         - FixedUpdate() : Void
-        - ConvertAccelerationAxis() : Vector3
     }
     
     class SceneChangeButton extends UnityEngine.MonoBehaviour {
@@ -187,10 +182,16 @@ package P209 {
         - xMaxAngle : Float 
         - zMinAngle : Float 
         - zMaxAngle : Float 
+        - xMinCalibratedAngle : Float
+        - xMaxCalibratedAngle : Float
+        - zMinCalibratedAngle : Float
+        - zMaxCalibratedAngle : Float
         - pivotPoint : GameObject
+        
+        - ZERO_DEGREES : Int
         - PIVOT : String
         
-        - <<Property>> Accelerometer : UnityEngine.InputSystem.LowLevel.Accelerometer
+        - <<Property>> Accelerometer : Accelerometer
         
         - Awake() : Void
         - Start() : Void
@@ -198,6 +199,8 @@ package P209 {
         - SetAccelerometer() : Void
         - ControlRotation() : Void
         - LimitRotation() : Void
+        - SetPivotRotationToZero() : Void
+        - CalibrateAngles() : Void
         - GetPivotPointGameObject() : GameObject
     }
     
