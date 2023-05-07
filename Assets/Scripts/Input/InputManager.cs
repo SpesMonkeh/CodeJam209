@@ -11,8 +11,6 @@ namespace P209
 		public static Action<Vector2> primaryTouchAction = delegate {  };
 		public static Action<Vector3> angularVelocityAction = delegate {  };
 		
-		Gyroscope gyroscope;
-
 		static PlayerControls playerControls;
 
 		public Accelerometer Accelerometer => Accelerometer.current;
@@ -58,14 +56,13 @@ namespace P209
 
 		static void EnableSensor<TSensor>(TSensor sensor) where TSensor : Sensor
 		{
-			if (sensor is not null) 
-				InputSystem.EnableDevice(sensor);
+			if (sensor is null || sensor.enabled) return; 
+			InputSystem.EnableDevice(sensor);
 		}
 
 		public static void DisableSensor<TSensor>(TSensor sensor) where TSensor : Sensor
 		{
 			if (sensor is null || sensor.enabled is false) return;
-			Debug.Log($"P2 :::: Disabling sensor {sensor.name}");
 			InputSystem.DisableDevice(sensor);
 		}
 	}

@@ -3,12 +3,14 @@
 
 skinparam classAttributeIconSize 0
 
-
-
 package UnityEngine {
+    package InputSystem {
+        package LowLevel {
+            class Accelerometer        
+        }
+    }
     class MonoBehaviour
 }
-
 
 package P209 {
 
@@ -20,15 +22,15 @@ package P209 {
     struct GeneralActions {
         - m_Wrapper : PlayerControls
        
-        +<<Constructor>> GeneralActions(PlayerControls)
-        +<<Property>> PrimaryTouch : InputAction
-        +<<Property>> Gyroscope : InputAction
-        +<<Property>> enabled : Bool
+        + <<Constructor>> GeneralActions(PlayerControls)
+        + <<Property>> PrimaryTouch : InputAction
+        + <<Property>> Gyroscope : InputAction
+        + <<Property>> enabled : Bool
         
         + Get() : InputActionMap
         + Enable() : Void
         + Disable() : Void
-        +<<Implicit Operator>> InputActionMap(GeneralActions) {static}
+        + <<Implicit Operator>> InputActionMap(GeneralActions) {static}
         + AddCallbacks(IGeneralActions) : Void
         - UnregisterCallbacks(IGeneralActions) : Void
         + RemoveCallbacks(IGeneralActions) : Void
@@ -36,19 +38,22 @@ package P209 {
     }
     
     class PlayerControls {
-        -<<readonly>> m_General : InputActionMap
         - m_GeneralActionsCallbackInterfaces : List<IGeneralActions>
-        -<<readonly>> m_General_PrimaryTouch : InputAction
-        -<<readonly>> m_General_Gyroscope : InputAction
-        +<<struct>> GeneralActions
-                                                      
-        +<<Property>> asset : InputActionAsset
-        +<<Property>> bindingMask : InputBinding?
-        +<<Property>> devices : ReadOnlyArray<InputDevice>?
-        +<<Property>> controlSchemes : ReadOnlyArray<InputControlScheme>
-        +<<Property>> bindings : IEnumerable<InputBinding>
-
-        +<<Constructor>> PlayerControls()
+        - m_PlayerInputSchemeIndex : Int
+        - <<readonly>> m_General : InputActionMap
+        - <<readonly>> m_General_PrimaryTouch : InputAction
+        - <<readonly>> m_General_Gyroscope : InputAction
+        
+        + <<Property>> asset : InputActionAsset
+        + <<Property>> bindingMask : InputBinding?
+        + <<Property>> devices : ReadOnlyArray<InputDevice>?
+        + <<Property>> controlSchemes : ReadOnlyArray<InputControlScheme>
+        + <<Property>> bindings : IEnumerable<InputBinding>
+        + <<Property>> General : GeneralActions                                              
+        + <<Property>> PlayerInputScheme : InputControlScheme
+        
+        + <<Constructor>> PlayerControls()
+        
         + Dispose() : Void
         + Contains(InputAction) : Bool
         + GetEnumerator() : IEnumerator<InputAction>
@@ -86,8 +91,8 @@ package P209 {
         - inputManager : InputManager
         - instance : GameManager {static}
         
-        +<<Property>> InputManager InputManager
-        +<<Property>> GameManager Instance {static}
+        + <<Property>> InputManager InputManager
+        + <<Property>> GameManager Instance {static}
         
         GetElseAddComponent<T is MonoBehaviour>() : UnityEngine.MonoBehaviour {static}
     }
@@ -96,10 +101,9 @@ package P209 {
         + primaryTouchAction : Action<Vector2> {static}
         + angularVelocityAction : Action<Vector3> {static}
         - playerControls : PlayerControls {static}
-        - gyroscope : Gyroscope
         
-        +<<Property>> Accelerometer : Accelerometer
-        +<<Property>> Acceleration : Vector3
+        + <<Property>> Accelerometer : UnityEngine.InputSystem.LowLevel.Accelerometer
+        + <<Property>> Acceleration : Vector3
         
         + OnPrimaryTouch(InputAction.CallbackContext) : Void
         + OnGyroscope(InputAction.CallbackContext) : Void
@@ -145,7 +149,7 @@ package P209 {
         - acceleration : Vector3
         - desiredVelocity : Vector3
         - rigidBody : Rigidbody
-        - accelerometer : Accelerometer
+        - accelerometer : UnityEngine.InputSystem.LowLevel.Accelerometer
         - ZERO : Int
         
         - Awake() : Void
@@ -162,8 +166,8 @@ package P209 {
         # ZERO : Int
         # OFF_BY_ONE_MITIGATOR : Int
         
-        #<<Property>> ActiveSceneBuildIndex : Int {static}
-        #<<Property>> SceneIndicesInBuild : Int {static}
+        # <<Property>> ActiveSceneBuildIndex : Int {static}
+        # <<Property>> SceneIndicesInBuild : Int {static}
         
         - Awake() : Void
         - OnDisable() : Void
@@ -186,15 +190,15 @@ package P209 {
         - pivotPoint : GameObject
         - PIVOT : String
         
-        - <<Property>> Accelerometer : Accelerometer
+        - <<Property>> Accelerometer : UnityEngine.InputSystem.LowLevel.Accelerometer
         
-        -Awake() : Void
-        -Start() : Void
-        -Update() : Void
-        -SetAccelerometer() : Void
-        -ControlRotation() : Void
-        -LimitRotation() : Void
-        -GetPivotPointGameObject() : GameObject
+        - Awake() : Void
+        - Start() : Void
+        - Update() : Void
+        - SetAccelerometer() : Void
+        - ControlRotation() : Void
+        - LimitRotation() : Void
+        - GetPivotPointGameObject() : GameObject
     }
     
     class DebugPanel extends UnityEngine.MonoBehaviour {
@@ -215,11 +219,12 @@ package P209 {
     } 
     
     class SceneVerifier extends UnityEngine.MonoBehaviour {
-        Awake()
+        - Awake()
     }
     
     note "Auto-generated Unity class" as AUTO_N
     PlayerControls .. AUTO_N
+    GeneralActions .. AUTO_N
     IGeneralActions .. AUTO_N
 }
 @enduml
