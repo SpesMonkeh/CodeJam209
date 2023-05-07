@@ -12,9 +12,6 @@ public sealed class DebugPanel : MonoBehaviour
 	[SerializeField] Button debugPanelButton;
 	[SerializeField] TMP_Text debugPanelButtonTMP;
 
-	[Header("Debug Fields")]
-	[SerializeField] TMP_Text primaryTouchPositionTMP;
-
 	[Header("Gyroscope")]
 	[SerializeField] TMP_Text xGyroTMP;
 	[SerializeField] TMP_Text yGyroTMP;

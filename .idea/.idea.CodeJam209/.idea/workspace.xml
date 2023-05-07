@@ -5,35 +5,76 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="71cf4428-5133-410a-b40a-9a33bc552c6a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/UnityDefaultRuntimeTheme.tss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/UnityDefaultRuntimeTheme.tss.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Adaptive Performance/AdaptivePerformanceGeneralSettings.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Adaptive Performance/AdaptivePerformanceGeneralSettings.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Adaptive Performance/Provider.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Adaptive Performance/Provider/Samsung Android Provider Loader.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Adaptive Performance/Provider/Samsung Android Provider Loader.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Adaptive Performance/Settings/Samsung Android Provider Settings.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Adaptive Performance/Settings/Samsung Android Provider Settings.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scenes/Final/MainMenu.unity" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scenes/Final/MainMenu.unity.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/SceneVerifier.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Core/SceneVerifier.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Levels/InsertionPoint/PlayerControllerArm.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UML.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UML/ClassUML.puml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UML/ClassUML.puml.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UML/SequenceUML.puml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UML/SequenceUML.puml.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UML/UseCaseUML.puml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UML/UseCaseUML.puml.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CodeJam209/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CodeJam209/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/GAME MANAGER.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/GAME MANAGER.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Resources/GAME MANAGER.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Resources/GAME MANAGER.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Final/00_MainMenu.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Final/00_MainMenu.unity.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Final/InsertionPoint.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Final/InsertionPoint.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/SceneManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Core/SceneManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/SceneManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Core/SceneManager.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Debug/DebugPanel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Debug/DebugPanel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Input/InputManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Input/InputManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Levels/InsertionPoint/ArmPart.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Levels/InsertionPoint/ArmPart.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Levels/InsertionPoint/PlayerControllerNeedle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Levels/InsertionPoint/PlayerControllerNeedle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Levels/InsertionPoint/ArmController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Levels/InsertionPoint/ArmController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Levels/InsertionPoint/NeedlePoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Levels/InsertionPoint/NeedlePoint.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Levels/InsertionPoint/PlayerControllerNeedle.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Levels/InsertionPoint/PlayerControllerNeedle.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Levels/InsertionPoint/PlayerControllerArm.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/MainMenuButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/MainMenuButton.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/SceneChangeButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/SceneChangeButton.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CodeJam209.sln.DotSettings" beforeDir="false" afterPath="$PROJECT_DIR$/CodeJam209.sln.DotSettings" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="UML Class" />
+        <option value="UML Use Case" />
+        <option value="UML Sequence" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b0fc6facff52490f8c5788181f70c5cc16f000/41/1d2781fe/Resources.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b0fc6facff52490f8c5788181f70c5cc16f000/80/be2fbac1/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b0fc6facff52490f8c5788181f70c5cc16f000/90/fc7fdd48/Behaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b0fc6facff52490f8c5788181f70c5cc16f000/a2/edc2e3cf/GameObject.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b0fc6facff52490f8c5788181f70c5cc16f000/a6/7f3cd847/Component.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b0fc6facff52490f8c5788181f70c5cc16f000/ad/93213454/WaitForEndOfFrame.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b0fc6facff52490f8c5788181f70c5cc16f000/b4/f81d1d43/Transform.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b0fc6facff52490f8c5788181f70c5cc16f000/e4/25916ca4/Object.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Core/SceneVerifier.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Debug/DebugPanel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Input/InputManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -50,6 +91,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;DefaultPlantUmlFileTemplate&quot;: &quot;UML Sequence&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
@@ -59,7 +101,8 @@
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;RiderUnityFileTemplatesSettings&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.smartKeys_rider&quot;,
+    &quot;settings.editor.splitter.proportion&quot;: &quot;0.2324159&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -130,6 +173,13 @@
       <workItem from="1682635112475" duration="5606000" />
       <workItem from="1682943733625" duration="5992000" />
       <workItem from="1682985976458" duration="9327000" />
+      <workItem from="1683036296735" duration="4720000" />
+      <workItem from="1683205298997" duration="7669000" />
+      <workItem from="1683377455942" duration="2135000" />
+      <workItem from="1683384602887" duration="1333000" />
+      <workItem from="1683387974716" duration="8540000" />
+      <workItem from="1683466749763" duration="11435000" />
+      <workItem from="1683482485945" duration="350000" />
     </task>
     <servers />
   </component>

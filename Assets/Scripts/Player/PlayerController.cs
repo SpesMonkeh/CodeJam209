@@ -24,16 +24,23 @@ namespace P209
 
 		void Start()
 		{
+#if PLATFORM_ANDROID
 			accelerometer = GameManager.Instance.InputManager.Accelerometer;
+#endif
 		}
-
+/*
 		void Update()
 		{
+#if PLATFORM_ANDROID
 			acceleration = accelerometer.acceleration.value;
+#endif		
 		}
+*/
 
+/*
 		void FixedUpdate()
 		{
+#if PLATFORM_ANDROID
 			Vector3 currentVelocity = rigidBody.velocity;
 			Vector3 convertedAccelerationAxes = ConvertAccelerationAxes();
 			
@@ -43,8 +50,9 @@ namespace P209
 				rigidBody.velocity = desiredVelocity;
 			else if (desiredVelocity == Vector3.zero && currentVelocity != Vector3.zero)
 				rigidBody.velocity = Vector3.Lerp(currentVelocity, Vector3.zero, 1 * Time.fixedDeltaTime);
+#endif			
 		}
-
+*/
 		Vector3 ConvertAccelerationAxes()
 		{
 			Vector3 axes = accelerometer.acceleration.value;
@@ -52,4 +60,3 @@ namespace P209
 		}
 	}
 }
-

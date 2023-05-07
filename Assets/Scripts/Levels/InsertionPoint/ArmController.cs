@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 namespace P209
@@ -9,10 +9,12 @@ namespace P209
 	{
 		[SerializeField] bool needleHitVein;
 		[SerializeField] bool needleHitArm;
-		[SerializeField] bool resettingArm;
+		[SerializeField] bool resettingTransform;
 		[SerializeField, Min(0f)] float armMoveSpeed = 4f;
 		[SerializeField, Min(0f)] float armResetSpeedMultiplier = 2f;
 		[SerializeField] Vector3 startPosition;
+		[SerializeField] Vector3 startRotation;
+		[SerializeField] GameObject pivotPoint;
 		[SerializeField] BoxCollider veinCollider;
 		[SerializeField] MeshCollider armCollider;
 		
@@ -20,12 +22,16 @@ namespace P209
 		NeedlePoint needlePoint;
 		WaitForEndOfFrame waitForEndOfFrame;
 
+		const string PIVOT = "Pivot";
+
 		public BoxCollider VeinCollider => veinCollider;
 		public MeshCollider ArmCollider => armCollider;
 
 		void OnEnable()
 		{
-			startPosition = transform.position;
+			Transform tf = transform;
+			startPosition = tf.position;
+			startRotation = tf.rotation.eulerAngles;
 		}
 
 		void OnDisable()
@@ -37,15 +43,16 @@ namespace P209
 		{
 			waitForEndOfFrame = new WaitForEndOfFrame();
 			mainCam = Camera.main;
+			pivotPoint = GetPivotPointGameObject();
 			needlePoint = FindObjectOfType<NeedlePoint>();
 			needlePoint.onNeedleHitArm += OnNeedleHit;
 		}
 
 		void Update()
 		{
-			if (resettingArm) return;
+			if (resettingTransform) return;
 			
-			if ((needleHitVein) is false)
+			if (needleHitVein is true)
 			{
 				Vector3 pos = transform.position;
 				pos.y = Mathf.Lerp(pos.y, mainCam.transform.position.y, armMoveSpeed * Time.deltaTime);
@@ -61,7 +68,7 @@ namespace P209
 			switch (hit)
 			{
 				case { arm: true, vein: false }: 
-					StartCoroutine(nameof(MoveToStartPosition));
+					StartCoroutine(nameof(ResetTransform));
 					break;
 				case { arm: true or false, vein: true }:
 					Debug.Log("YAY!!");
@@ -69,19 +76,38 @@ namespace P209
 			}
 		}
 
-		IEnumerator MoveToStartPosition()
+		IEnumerator ResetTransform()
 		{
-			Vector3 pos = transform.position;
-			resettingArm = Math.Abs(pos.y - startPosition.y) > 0.1f;
+			const float min_position_diff = .1f;
+			const float min_rotation_diff = .01f;
 
-			while (resettingArm)
+			Transform tf = transform;
+			Vector3 position = tf.position;
+			Vector3 rotation = tf.rotation.eulerAngles;
+
+			float yPositionDiff = Mathf.Abs(position.y - startPosition.y);
+			float xRotationDiff = Mathf.Abs(rotation.x - startRotation.x);
+			float zRotationDiff = Mathf.Abs(rotation.z - startRotation.z);
+
+			bool resettingPosition = yPositionDiff > min_position_diff;
+			bool resettingRotation = xRotationDiff > min_rotation_diff && zRotationDiff > min_rotation_diff;
+			resettingTransform = resettingPosition && resettingRotation;
+			
+			while (resettingTransform)
 			{
-				pos.y = Mathf.Lerp(pos.y, startPosition.y, armMoveSpeed * armResetSpeedMultiplier * Time.deltaTime);
-				transform.position = pos;
+				position.y = Mathf.Lerp(position.y, startPosition.y, armMoveSpeed * armResetSpeedMultiplier * Time.deltaTime);
+				rotation = Vector3.Lerp(rotation, startRotation, armResetSpeedMultiplier * Time.deltaTime);
+				
+				transform.position = position;
+				transform.rotation = Quaternion.Euler(rotation);
+				
 				yield return waitForEndOfFrame;
 
-				if (Math.Abs(pos.y - startPosition.y) <= 0.1f)
-					resettingArm = false;
+				resettingPosition = yPositionDiff > min_position_diff;
+				resettingRotation = xRotationDiff > min_rotation_diff && zRotationDiff > min_rotation_diff;
+		
+				if ((resettingPosition && resettingRotation) is false)
+					resettingTransform = false;
 			}
 			
 			needleHitArm = false;
@@ -89,5 +115,13 @@ namespace P209
 			
 			yield return waitForEndOfFrame;
 		}
+		
+		GameObject GetPivotPointGameObject() => 
+			(from childTransform
+					in GetComponentsInChildren<Transform>()
+				where childTransform.name
+					is PIVOT
+				select childTransform.gameObject)
+			.FirstOrDefault();
 	}
 }

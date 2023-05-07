@@ -1,0 +1,225 @@
+﻿@startuml
+'https://plantuml.com/class-diagram
+
+skinparam classAttributeIconSize 0
+
+
+
+package UnityEngine {
+    class MonoBehaviour
+}
+
+
+package P209 {
+
+    interface IGeneralActions {
+        OnPrimaryTouch(InputAction.CallbackContext context) : Void {abstract}
+        OnAngularVelocity(InputAction.CallbackContext) : Void {abstract}
+    }
+    
+    struct GeneralActions {
+        - m_Wrapper : PlayerControls
+       
+        +<<Constructor>> GeneralActions(PlayerControls)
+        +<<Property>> PrimaryTouch : InputAction
+        +<<Property>> Gyroscope : InputAction
+        +<<Property>> enabled : Bool
+        
+        + Get() : InputActionMap
+        + Enable() : Void
+        + Disable() : Void
+        +<<Implicit Operator>> InputActionMap(GeneralActions) {static}
+        + AddCallbacks(IGeneralActions) : Void
+        - UnregisterCallbacks(IGeneralActions) : Void
+        + RemoveCallbacks(IGeneralActions) : Void
+        + SetCallbacks(IGeneralActions) : Void
+    }
+    
+    class PlayerControls {
+        -<<readonly>> m_General : InputActionMap
+        - m_GeneralActionsCallbackInterfaces : List<IGeneralActions>
+        -<<readonly>> m_General_PrimaryTouch : InputAction
+        -<<readonly>> m_General_Gyroscope : InputAction
+        +<<struct>> GeneralActions
+                                                      
+        +<<Property>> asset : InputActionAsset
+        +<<Property>> bindingMask : InputBinding?
+        +<<Property>> devices : ReadOnlyArray<InputDevice>?
+        +<<Property>> controlSchemes : ReadOnlyArray<InputControlScheme>
+        +<<Property>> bindings : IEnumerable<InputBinding>
+
+        +<<Constructor>> PlayerControls()
+        + Dispose() : Void
+        + Contains(InputAction) : Bool
+        + GetEnumerator() : IEnumerator<InputAction>
+        + Enable() : Void
+        + Disable() : Void
+        + FindAction(String,Bool) : InputAction
+        + FindBinding(InputBinding,out InputAction) : Int
+        - IEnumerable.GetEnumerator() : IEnumerator
+        
+    }
+    PlayerControls +- IGeneralActions
+    PlayerControls +- GeneralActions
+    
+    class ArmPart extends UnityEngine.MonoBehaviour {
+        - isMainVeinPart : Bool
+        - armController : ArmController
+        - MAIN_VEIN_NAME : String
+        
+        +<<Property>> IsMainVeinPart : Bool
+        +<<Property>> ArmController : ArmController
+        
+        - OnEnable() : Void
+        - OnDisable() : Void
+    }
+    
+    class NeedlePoint extends UnityEngine.MonoBehaviour {
+        + onNeedleHitArm : Action<(Bool,Bool)>
+        - pointCollider : BoxCollider
+        
+        - Awake() : Void
+        - OnTriggerEnter(Collider) : Void
+    }
+    
+    class GameManager <<Singleton>> extends UnityEngine.MonoBehaviour  {
+        - inputManager : InputManager
+        - instance : GameManager {static}
+        
+        +<<Property>> InputManager InputManager
+        +<<Property>> GameManager Instance {static}
+        
+        GetElseAddComponent<T is MonoBehaviour>() : UnityEngine.MonoBehaviour {static}
+    }
+    
+    class InputManager extends UnityEngine.MonoBehaviour {
+        + primaryTouchAction : Action<Vector2> {static}
+        + angularVelocityAction : Action<Vector3> {static}
+        - playerControls : PlayerControls {static}
+        - gyroscope : Gyroscope
+        
+        +<<Property>> Accelerometer : Accelerometer
+        +<<Property>> Acceleration : Vector3
+        
+        + OnPrimaryTouch(InputAction.CallbackContext) : Void
+        + OnGyroscope(InputAction.CallbackContext) : Void
+        - OnEnable() : Void
+        - OnDisable() : Void
+        - Awake() : Void
+        - EnableSensor<T is Sensor>(T) : Void {static}
+        - DisableSensor<T is Sensor>(T) : Void {static}
+    }
+    IGeneralActions <- InputManager
+    
+    class ArmController extends UnityEngine.MonoBehaviour {
+        - needleHitVein : Bool
+        - needleHitArm : Bool
+        - resettingTransform : Bool
+        - armMoveSpeed: Float
+        - armResetSpeedMultiplier : Float
+        - startPosition : Vector3
+        - startRotation : Vector3
+        - mainCam : Camera
+        - pivotPoint : GameObject
+        - needlePoint : NeedlePoint
+        - veinCollider : BoxCollider
+        - armCollider : MeshCollider
+        - waitForEndOfFrame : WaitForEndOfFrame
+        - PIVOT : String
+        
+        + <<Property>> VeinCollider : BoxCollider
+        + <<Property>> ArmCollider : MeshCollider
+        
+        -OnEnable() : Void
+        -OnDisable() : Void
+        -Awake() : Void
+        -Update() : Void
+        -OnNeedleHit() : Void
+        -ResetTransform() : IEnumerator
+        -GetPivotPointGameObject() : GameObject
+    }
+    
+    class PlayerController extends UnityEngine.MonoBehaviour {
+        - moveSpeed : Float
+        - angularVelocity : Vector3
+        - acceleration : Vector3
+        - desiredVelocity : Vector3
+        - rigidBody : Rigidbody
+        - accelerometer : Accelerometer
+        - ZERO : Int
+        
+        - Awake() : Void
+        - Start() : Void
+        - Update() : Void
+        - FixedUpdate() : Void
+        - ConvertAccelerationAxis() : Vector3
+    }
+    
+    class SceneChangeButton extends UnityEngine.MonoBehaviour {
+        - goToSceneIndex : Int
+        # sceneChangeButton : Button
+        # sceneManager : SceneManager
+        # ZERO : Int
+        # OFF_BY_ONE_MITIGATOR : Int
+        
+        #<<Property>> ActiveSceneBuildIndex : Int {static}
+        #<<Property>> SceneIndicesInBuild : Int {static}
+        
+        - Awake() : Void
+        - OnDisable() : Void
+        # GoToScene() : Void
+    }
+    
+    class MainMenuButton extends SceneChangeButton {
+        - MAIN_MENU_SCENE_INDEX : int
+        - OnEnable() : Void
+    }
+    
+    class PlayerControllerArm extends UnityEngine.MonoBehaviour {
+        - accelerationSensitivity : Float
+        - xStartAngle : Float
+        - zStartAngle : Float
+        - xMinAngle : Float
+        - xMaxAngle : Float 
+        - zMinAngle : Float 
+        - zMaxAngle : Float 
+        - pivotPoint : GameObject
+        - PIVOT : String
+        
+        - <<Property>> Accelerometer : Accelerometer
+        
+        -Awake() : Void
+        -Start() : Void
+        -Update() : Void
+        -SetAccelerometer() : Void
+        -ControlRotation() : Void
+        -LimitRotation() : Void
+        -GetPivotPointGameObject() : GameObject
+    }
+    
+    class DebugPanel extends UnityEngine.MonoBehaviour {
+        - debugPanel : GameObject
+        - debugPanelButton : Button
+        - debugPanelButtonTMP : TMP_Text
+        - xGyroTMP : TMP_Text
+        - yGyroTMP : TMP_Text
+        - zGyroTMP : TMP_Text
+        - SHOW_DEBUG_PANEL : String
+        - HIDE_DEBUG_PANEL : String
+        
+        - OnEnable()
+        - OnDisable()
+        - OnDebugButtonPressed()
+        - OnPrimaryTouchAction(Vector2)
+        - OnAngularVelocity(Vector3)
+    } 
+    
+    class SceneVerifier extends UnityEngine.MonoBehaviour {
+        Awake()
+    }
+    
+    note "Auto-generated Unity class" as AUTO_N
+    PlayerControls .. AUTO_N
+    IGeneralActions .. AUTO_N
+}
+@enduml

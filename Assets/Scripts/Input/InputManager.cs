@@ -15,9 +15,6 @@ namespace P209
 
 		static PlayerControls playerControls;
 
-		const int ZERO = 0;
-		const float POINT_O_ONE = 0.01f;
-
 		public Accelerometer Accelerometer => Accelerometer.current;
 		public Vector3 Acceleration => Accelerometer.acceleration.value;
 		
@@ -26,12 +23,16 @@ namespace P209
 		public void OnGyroscope(InputAction.CallbackContext context)
 		{
 			Vector3 inputVector = context.ReadValue<Vector3>();
-			
-			CheckIfSmallAmount(ref inputVector.x);
-			CheckIfSmallAmount(ref inputVector.y);
-			CheckIfSmallAmount(ref inputVector.z);
+
+			const int zero = 0;
+			const float threshold = .01f;
+			set_to_zero_if_at_threshold(val: ref inputVector.x);
+			set_to_zero_if_at_threshold(val: ref inputVector.y);
+			set_to_zero_if_at_threshold(val: ref inputVector.z);
 
 			angularVelocityAction?.Invoke(inputVector);
+
+			void set_to_zero_if_at_threshold(ref float val) => val = Mathf.Abs(val) >= threshold ? val : zero;
 		}
 
 		void OnEnable()
@@ -66,12 +67,6 @@ namespace P209
 			if (sensor is null || sensor.enabled is false) return;
 			Debug.Log($"P2 :::: Disabling sensor {sensor.name}");
 			InputSystem.DisableDevice(sensor);
-		}
-
-		static void CheckIfSmallAmount(ref float value)
-		{
-			if (Mathf.Abs(value) >= POINT_O_ONE) return;
-			value = ZERO;
 		}
 	}
 }

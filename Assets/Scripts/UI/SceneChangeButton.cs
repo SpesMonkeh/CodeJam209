@@ -1,28 +1,47 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
 
 namespace P209
 {
 	[DisallowMultipleComponent][RequireComponent(typeof(Button))]
-	public sealed class SceneChangeButton : MonoBehaviour
+	public class SceneChangeButton : MonoBehaviour
 	{
-		[SerializeField, Min(0f)] int goToSceneIndex = -1;
+		[SerializeField, Min(0f)] protected int goToSceneIndex;
 		
-		Button sceneChangeButton;
-		SceneManager sceneManager;
+		protected Button sceneChangeButton;
+		protected SceneManager sceneManager;
+		
+		protected const int ZERO = 0;
+		protected const int OFF_BY_ONE_MITIGATOR = 1;
 
+		protected static int ActiveSceneBuildIndex => SceneManager.GetActiveScene().buildIndex;
+		protected static int SceneIndicesInBuild => SceneManager.sceneCountInBuildSettings - OFF_BY_ONE_MITIGATOR;
+		
 		void Awake()
 		{
-			sceneManager = GameManager.Instance.SceneManager;
 			sceneChangeButton = GetComponent<Button>();
-			sceneChangeButton.onClick.AddListener(RequestSceneChange);
+			sceneChangeButton.onClick?.AddListener(GoToScene);
 		}
 
-		void RequestSceneChange()
+		void OnDisable()
 		{
-			if (UnitySceneManager.GetSceneByBuildIndex(goToSceneIndex).IsValid() is false) return;
-			sceneManager.GoToScene(goToSceneIndex);
+			sceneChangeButton.onClick?.RemoveListener(GoToScene);
+		}
+
+		protected void GoToScene()
+		{
+			if (goToSceneIndex > SceneIndicesInBuild)
+			{
+				Debug.LogError($"Unable to load scene with build index {goToSceneIndex.ToString()}");
+				return;
+			}
+			if (goToSceneIndex == ActiveSceneBuildIndex)
+			{
+				Debug.LogWarning($"Scene with index {goToSceneIndex.ToString()} is already the active scene.");
+				return;
+			}
+			SceneManager.LoadScene(goToSceneIndex);
 		}
 	}
 }
