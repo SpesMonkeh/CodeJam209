@@ -12,13 +12,14 @@ namespace P209
 		void Awake()
 		{
 			quitGameButton = GetComponent<Button>();
-			quitGameButton.onClick?.AddListener(QuitApplication);
+			quitGameButton.onClick?.AddListener(RequestQuitApplication);
+		}
+		
+		void OnDisable()
+		{
+			quitGameButton.onClick?.RemoveListener(RequestQuitApplication);
 		}
 
-		void QuitApplication()
-		{
-			quitGameButton.onClick?.RemoveListener(QuitApplication);
-			Application.Quit();
-		}
+		static void RequestQuitApplication() => GameManager.Instance.QuitApplication();
 	}
 }

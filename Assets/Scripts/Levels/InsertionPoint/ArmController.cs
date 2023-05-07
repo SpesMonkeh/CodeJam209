@@ -30,8 +30,8 @@ namespace P209
 		void OnEnable()
 		{
 			Transform tf = transform;
-			startPosition = tf.position;
-			startRotation = tf.rotation.eulerAngles;
+			startPosition = tf.localPosition;
+			startRotation = tf.localRotation.eulerAngles;
 		}
 
 		void OnDisable()
@@ -50,14 +50,11 @@ namespace P209
 
 		void Update()
 		{
-			if (resettingTransform) return;
+			if (resettingTransform || needleHitVein) return;
 			
-			if (needleHitVein is true)
-			{
-				Vector3 pos = transform.position;
-				pos.y = Mathf.Lerp(pos.y, mainCam.transform.position.y, armMoveSpeed * Time.deltaTime);
-				transform.position = pos;
-			}
+			Vector3 position = transform.position;
+			position.y = Mathf.Lerp(position.y, mainCam.transform.position.y, armMoveSpeed * Time.deltaTime);
+			transform.position = position;
 		}
 
 		void OnNeedleHit((bool arm, bool vein) hit)
@@ -90,8 +87,8 @@ namespace P209
 			float zRotationDiff = Mathf.Abs(rotation.z - startRotation.z);
 
 			bool resettingPosition = yPositionDiff > min_position_diff;
-			bool resettingRotation = xRotationDiff > min_rotation_diff && zRotationDiff > min_rotation_diff;
-			resettingTransform = resettingPosition && resettingRotation;
+			bool resettingRotation = xRotationDiff > min_rotation_diff || zRotationDiff > min_rotation_diff;
+			resettingTransform = resettingPosition || resettingRotation;
 			
 			while (resettingTransform)
 			{
@@ -103,15 +100,11 @@ namespace P209
 				
 				yield return waitForEndOfFrame;
 
-				resettingPosition = yPositionDiff > min_position_diff;
-				resettingRotation = xRotationDiff > min_rotation_diff && zRotationDiff > min_rotation_diff;
-		
-				if ((resettingPosition && resettingRotation) is false)
-					resettingTransform = false;
+				if (resettingPosition) continue;
+				
+				resettingTransform = false;
+				needleHitArm = needleHitVein = false;
 			}
-			
-			needleHitArm = false;
-			needleHitVein = false;
 			
 			yield return waitForEndOfFrame;
 		}

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace P209
@@ -28,7 +29,7 @@ namespace P209
 			}
 		}
 
-		public Accelerometer GetAccelerometer() => InputManager.Accelerometer;
+		public void QuitApplication() => Application.Quit();
 		
 		static TMonoBehaviour GetElseAddComponent<TMonoBehaviour>(GameObject gameObject) where TMonoBehaviour : MonoBehaviour
 			=> gameObject.GetComponentInChildren<TMonoBehaviour>() 

@@ -25,7 +25,7 @@ namespace P209
 		void Start()
 		{
 #if PLATFORM_ANDROID
-			accelerometer = GameManager.Instance.GetAccelerometer();
+			accelerometer = GameManager.Instance.InputManager.Accelerometer;
 #endif
 		}
 		

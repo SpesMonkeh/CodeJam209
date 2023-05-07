@@ -62,6 +62,38 @@ package P209 {
     PlayerControls +- IGeneralActions
     PlayerControls +- GeneralActions
     
+    class InputManager extends UnityEngine.MonoBehaviour {
+           + primaryTouchAction : Action<Vector2> {static}
+           + angularVelocityAction : Action<Vector3> {static}
+           - playerControls : PlayerControls {static}
+           
+           + <<Property>> Accelerometer : Accelerometer
+           + <<Property>> Acceleration : Vector3
+           
+           + OnPrimaryTouch(InputAction.CallbackContext) : Void
+           + OnGyroscope(InputAction.CallbackContext) : Void
+           - OnEnable() : Void
+           - OnDisable() : Void
+           - Awake() : Void
+           - EnableSensor<T is Sensor>(T) : Void {static}
+           - DisableSensor<T is Sensor>(T) : Void {static}
+       }
+       IGeneralActions <- InputManager
+}
+
+note "Auto-generated Unity class" as AUTO_N
+PlayerControls .. AUTO_N
+GeneralActions .. AUTO_N
+IGeneralActions .. AUTO_N
+
+newpage
+
+package UnityEngine {
+    class MonoBehaviour
+}
+
+package P209 {
+    
     class ArmPart extends UnityEngine.MonoBehaviour {
         - isMainVeinPart : Bool
         - armController : ArmController
@@ -81,35 +113,6 @@ package P209 {
         - Awake() : Void
         - OnTriggerEnter(Collider) : Void
     }
-    
-    class GameManager <<Singleton>> extends UnityEngine.MonoBehaviour  {
-        - inputManager : InputManager
-        - instance : GameManager {static}
-        - GAME_MANAGER_PREFAB_PATH : String
-        
-        + <<Property>> InputManager InputManager
-        + <<Property>> GameManager Instance {static}
-        
-        GetElseAddComponent<T is MonoBehaviour>() : UnityEngine.MonoBehaviour {static}
-    }
-    
-    class InputManager extends UnityEngine.MonoBehaviour {
-        + primaryTouchAction : Action<Vector2> {static}
-        + angularVelocityAction : Action<Vector3> {static}
-        - playerControls : PlayerControls {static}
-        
-        + <<Property>> Accelerometer : Accelerometer
-        + <<Property>> Acceleration : Vector3
-        
-        + OnPrimaryTouch(InputAction.CallbackContext) : Void
-        + OnGyroscope(InputAction.CallbackContext) : Void
-        - OnEnable() : Void
-        - OnDisable() : Void
-        - Awake() : Void
-        - EnableSensor<T is Sensor>(T) : Void {static}
-        - DisableSensor<T is Sensor>(T) : Void {static}
-    }
-    IGeneralActions <- InputManager
     
     class ArmController extends UnityEngine.MonoBehaviour {
         - needleHitVein : Bool
@@ -154,26 +157,6 @@ package P209 {
         - FixedUpdate() : Void
     }
     
-    class SceneChangeButton extends UnityEngine.MonoBehaviour {
-        - goToSceneIndex : Int
-        # sceneChangeButton : Button
-        # sceneManager : SceneManager
-        # ZERO : Int
-        # OFF_BY_ONE_MITIGATOR : Int
-        
-        # <<Property>> ActiveSceneBuildIndex : Int {static}
-        # <<Property>> SceneIndicesInBuild : Int {static}
-        
-        - Awake() : Void
-        - OnDisable() : Void
-        # GoToScene() : Void
-    }
-    
-    class MainMenuButton extends SceneChangeButton {
-        - MAIN_MENU_SCENE_INDEX : int
-        - OnEnable() : Void
-    }
-    
     class PlayerControllerArm extends UnityEngine.MonoBehaviour {
         - accelerationSensitivity : Float
         - xStartAngle : Float
@@ -182,13 +165,10 @@ package P209 {
         - xMaxAngle : Float 
         - zMinAngle : Float 
         - zMaxAngle : Float 
-        - xMinCalibratedAngle : Float
-        - xMaxCalibratedAngle : Float
-        - zMinCalibratedAngle : Float
-        - zMaxCalibratedAngle : Float
         - pivotPoint : GameObject
         
         - ZERO_DEGREES : Int
+        - PIVOT_ROTATION_STEP_MULTIPLIER : Float
         - PIVOT : String
         
         - <<Property>> Accelerometer : Accelerometer
@@ -198,12 +178,32 @@ package P209 {
         - Update() : Void
         - SetAccelerometer() : Void
         - ControlRotation() : Void
-        - LimitRotation() : Void
         - SetPivotRotationToZero() : Void
         - CalibrateAngles() : Void
         - GetPivotPointGameObject() : GameObject
     }
+}
     
+newpage
+
+package UnityEngine {
+    class MonoBehaviour
+}
+
+package P209 {
+
+    class GameManager <<Singleton>> extends UnityEngine.MonoBehaviour  {
+        - inputManager : InputManager
+        - instance : GameManager {static}
+        - GAME_MANAGER_PREFAB_PATH : String
+        
+        + <<Property>> InputManager InputManager
+        + <<Property>> GameManager Instance {static}
+        
+        + QuitApplication() : Void
+        - GetElseAddComponent<T is MonoBehaviour>() : UnityEngine.MonoBehaviour {static}
+    }
+
     class DebugPanel extends UnityEngine.MonoBehaviour {
         - debugPanel : GameObject
         - debugPanelButton : Button
@@ -224,10 +224,43 @@ package P209 {
     class SceneVerifier extends UnityEngine.MonoBehaviour {
         - Awake()
     }
+}
+
+
+newpage
+
+package UnityEngine {
+    class MonoBehaviour
+}
+
+package P209 {
     
-    note "Auto-generated Unity class" as AUTO_N
-    PlayerControls .. AUTO_N
-    GeneralActions .. AUTO_N
-    IGeneralActions .. AUTO_N
+    class SceneChangeButton extends UnityEngine.MonoBehaviour {
+        - goToSceneIndex : Int
+        # sceneChangeButton : Button
+        # sceneManager : SceneManager
+        # ZERO : Int
+        # OFF_BY_ONE_MITIGATOR : Int
+        
+        # <<Property>> ActiveSceneBuildIndex : Int {static}
+        # <<Property>> SceneIndicesInBuild : Int {static}
+        
+        - Awake() : Void
+        - OnDisable() : Void
+        # GoToScene() : Void
+    }
+        
+    class MainMenuButton extends SceneChangeButton {
+        - MAIN_MENU_SCENE_INDEX : int
+        - OnEnable() : Void
+    }    
+    
+    class QuitGameButton extends UnityEngine.MonoBehaviour {
+        - quitGameButton : Button
+        
+        - Awake() : Void
+        - OnDisable() : Void
+        - RequestQuitApplication() : Void {static}
+    }
 }
 @enduml

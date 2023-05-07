@@ -15,13 +15,10 @@ namespace P209
 		[SerializeField] float xMaxAngle = 10f;
 		[SerializeField] float zMinAngle = -10f;
 		[SerializeField] float zMaxAngle = 10f;
-		[SerializeField] float xMinCalibratedAngle;
-		[SerializeField] float xMaxCalibratedAngle;
-		[SerializeField] float zMinCalibratedAngle;
-		[SerializeField] float zMaxCalibratedAngle;
 		[SerializeField] GameObject pivotPoint;
 
 		const int ZERO_DEGREES = 0;
+		const float PIVOT_ROTATION_STEP_MULTIPLIER = 6f;
 		const string PIVOT = "Pivot";
 
 		void Awake()
@@ -32,7 +29,6 @@ namespace P209
 		void Start()
 		{
 			SetPivotRotationToZero();
-			CalibrateAngles();
 			
 #if UNITY_ANDROID
 			SetAccelerometer();
@@ -54,35 +50,25 @@ namespace P209
 			if (accelerometer is null) return;
 			
 			Vector3 acceleration = accelerometer.acceleration.ReadValue();
-			LimitRotation(acceleration);
-		}
-
-		void LimitRotation(Vector3 acceleration)
-		{
-			Debug.Log($"P209 :::: Acceleration => {acceleration}");
-
-			float xAccelerationMultiplied = acceleration.x * accelerationSensitivity;
-			float zAccelerationMultiplied = acceleration.z * accelerationSensitivity;
-
-			Debug.Log($"P209 :::: xAccelerationMultiplied => {xAccelerationMultiplied} :::: zAccelerationMultiplied => {zAccelerationMultiplied}");
-			
 			Vector3 pivotEuler = pivotPoint.transform.rotation.eulerAngles;
-			Vector3 targetRotation = new(pivotEuler.x + xAccelerationMultiplied, pivotEuler.y, pivotEuler.z + zAccelerationMultiplied);
-			
-			Debug.Log($"P209 :::: Rotation pre-lerp => {pivotEuler}");
-			Debug.Log($"P209 :::: TargetRot pre-clamp => {targetRotation}");
 
-			targetRotation.x = Mathf.Clamp(targetRotation.x, xMinCalibratedAngle, xMaxCalibratedAngle);
-			targetRotation.z = Mathf.Clamp(targetRotation.z, zMinCalibratedAngle, zMaxCalibratedAngle);
-
-			Debug.Log($"P209 :::: TargetRot post-clamp => {targetRotation}");
-
-			pivotEuler.x = Mathf.Lerp(pivotEuler.x, targetRotation.x, Time.deltaTime);
-			pivotEuler.z = Mathf.Lerp(pivotEuler.z, targetRotation.z, Time.deltaTime);
+			float xTargetRot = pivotEuler.x + acceleration.x;
+			float zTargetRot = pivotEuler.z + acceleration.z;
 			
-			Debug.Log($"P209 :::: Rotation post-lerp => {pivotEuler}");
+			float xTargetClamped = Mathf.Clamp(xTargetRot, xMinAngle, xMaxAngle);
+			float zTargetClamped = Mathf.Clamp(zTargetRot, zMinAngle, zMaxAngle);
 			
-			pivotPoint.transform.rotation = Quaternion.Euler(pivotEuler);
+			Vector3 targetRotation = new(xTargetClamped, ZERO_DEGREES, zTargetClamped);
+
+			float maxDegreesDelta = Time.deltaTime * PIVOT_ROTATION_STEP_MULTIPLIER;
+			
+			Quaternion pivotQuaternion = Quaternion.Euler(pivotEuler);
+			Quaternion targetQuaternion = Quaternion.Euler(targetRotation);
+			
+			Vector3 finalRotation = Quaternion.RotateTowards(pivotQuaternion, targetQuaternion, maxDegreesDelta).eulerAngles;
+			finalRotation.y = ZERO_DEGREES;
+			
+			pivotPoint.transform.rotation = Quaternion.Euler(finalRotation);
 		}
 #endif
 		
@@ -96,15 +82,6 @@ namespace P209
 
 			pivotQuaternion = Quaternion.Euler(pivotEuler);
 			pivotPoint.transform.rotation = pivotQuaternion;
-		}
-		
-		void CalibrateAngles()
-		{
-			xMinCalibratedAngle = xStartAngle + xMinAngle;
-			xMaxCalibratedAngle = xStartAngle + xMaxAngle;
-			
-			zMinCalibratedAngle = zStartAngle + zMinAngle;
-			zMaxCalibratedAngle = zStartAngle + zMaxAngle;
 		}
 		
 		GameObject GetPivotPointGameObject() => 
